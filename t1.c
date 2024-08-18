@@ -5,14 +5,14 @@
 
 #pragma STDC FENV_ACCESS ON
 
-int validateInput (int length, char *input[]);
-int validateFloat (char *input);
+int validateInput(int length, char *input[]);
+int validateFloat(char *input);
 
-void calculate (float num1, float num2, char op, float *result);
+void calculate(float num1, float num2, char op, float *result);
 
-void logOutput       (float num1, float num2, char op, float result);
-void logBits         (float num);
-void logFEExceptions ();
+void logOutput(float num1, float num2, char op, float result);
+void logBits(float num);
+void logFEExceptions();
 
 int main(int argc, char *argv[])
 {
@@ -22,11 +22,11 @@ int main(int argc, char *argv[])
     feclearexcept(FE_ALL_EXCEPT);
 
     float num1, num2, result;
-    char  op;  
+    char op;
 
     num1 = atof(argv[1]);
     num2 = atof(argv[3]);
-    op   = argv[2][0];
+    op = argv[2][0];
 
     calculate(num1, num2, op, &result);
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 int validateInput(int length, char *input[])
 {
-    if (length != 4)    
+    if (length != 4)
     {
         printf("Informe uma entrada valida no formato:\nnum1 op num2\n");
         return 1;
@@ -59,7 +59,7 @@ int validateInput(int length, char *input[])
 
     if (validateFloat(input[1]) || validateFloat(input[3]))
         return 1;
-    
+
     return 0;
 }
 
@@ -74,26 +74,27 @@ int validateFloat(char *input)
     }
 
     return 0;
-}           
+}
 
 void calculate(float num1, float num2, char op, float *result)
 {
     switch (op)
     {
-        case '+':
-            *result = num1 + num2;;
-            break;
-        case '-':
-            *result = num1 - num2;
-            break;
-        case 'x':
-        case 'X':
-        case '.':
-            *result = num1 * num2;
-            break;
-        case '/':
-            *result = num1 / num2;
-            break;
+    case '+':
+        *result = num1 + num2;
+        ;
+        break;
+    case '-':
+        *result = num1 - num2;
+        break;
+    case 'x':
+    case 'X':
+    case '.':
+        *result = num1 * num2;
+        break;
+    case '/':
+        *result = num1 / num2;
+        break;
     }
 }
 
@@ -106,7 +107,7 @@ void logOutput(float num1, float num2, char op, float result)
 
     printf("val2 = ");
     logBits(num2);
-    
+
     printf("res  = ");
     logBits(result);
 
@@ -126,15 +127,15 @@ void logBits(float num)
         if (i == 31 || i == 23)
             printf(" ");
     }
-    
-    printf("\n");
+
+    printf(" = %f\n", num);
 }
 
 void logFEExceptions()
 {
-    printf("Excecao FE_INEXACT: %d\n", fetestexcept(FE_INEXACT));
-    printf("Excecao FE_DIVBYZERO: %d\n", fetestexcept(FE_DIVBYZERO));
-    printf("Excecao FE_UDNERFLOW: %d\n", fetestexcept(FE_UNDERFLOW));
-    printf("Excecao FE_OVERFLOW: %d\n", fetestexcept(FE_OVERFLOW));
-    printf("Excecao FE_INVALID: %d\n", fetestexcept(FE_INVALID));
+    printf("Excecao FE_INEXACT: %d\n", (fetestexcept(FE_INEXACT) > 0));
+    printf("Excecao FE_DIVBYZERO: %d\n", (fetestexcept(FE_DIVBYZERO) > 0));
+    printf("Excecao FE_UDNERFLOW: %d\n", (fetestexcept(FE_UNDERFLOW) > 0));
+    printf("Excecao FE_OVERFLOW: %d\n", (fetestexcept(FE_OVERFLOW) > 0));
+    printf("Excecao FE_INVALID: %d\n", (fetestexcept(FE_INVALID) > 0));
 }
