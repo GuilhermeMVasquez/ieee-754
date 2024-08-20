@@ -82,7 +82,6 @@ void calculate(float num1, float num2, char op, float *result)
     {
     case '+':
         *result = num1 + num2;
-        ;
         break;
     case '-':
         *result = num1 - num2;
@@ -128,7 +127,7 @@ void logBits(float num)
             printf(" ");
     }
 
-    printf(" = %f\n", num);
+    printf(" = %.38g\n", num);
 }
 
 void logFEExceptions()
